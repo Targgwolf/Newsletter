@@ -1,271 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Will you be my Valentine?</title>
 
-  <!-- Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-  <style>
-    :root {
-      --bg1: #2b0a3d;
-      --bg2: #5b1fa6;
-      --card: rgba(255,255,255,0.18);
-      --accent: #b56cff;
-      --accentHover: #9f4bff;
-      --textMain: #ffffff;
-      --textSoft: rgba(255,255,255,.75);
-    }
+    <style>
+      :root {
+        --bg1: #2b0a3d;
+        --bg2: #5b1fa6;
+        --card: rgba(255, 255, 255, 0.18);
+        --accent: #b56cff;
+        --accentHover: #9f4bff;
+        --textMain: #ffffff;
+        --textSoft: rgba(255, 255, 255, 0.75);
+      }
 
-    * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
-    body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: "Poppins", system-ui, sans-serif;
-      overflow: hidden;
-      padding: 16px;
-      color: var(--textMain);
-    }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+        font-family: "Poppins", system-ui, sans-serif;
+        overflow: hidden;
+        padding: 16px;
+        color: var(--textMain);
+      }
 
-    /* CONFETTI CANVAS */
-    #confettiCanvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
+      /* CONFETTI CANVAS */
+      #confettiCanvas {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+      }
 
-    .card {
-      width: min(720px, 94vw);
-      padding: 30px 24px;
-      background: var(--card);
-      backdrop-filter: blur(16px);
-      border-radius: 26px;
-      text-align: center;
-      box-shadow: 0 25px 80px rgba(0,0,0,.35);
-      animation: float 6s ease-in-out infinite;
-    }
+      .card {
+        width: min(720px, 94vw);
+        padding: 30px 24px;
+        background: var(--card);
+        backdrop-filter: blur(16px);
+        border-radius: 26px;
+        text-align: center;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+        animation: float 6s ease-in-out infinite;
+        overflow: hidden;
+      }
 
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
 
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 14px;
-      display: block;
-      filter: drop-shadow(0 14px 24px rgba(0,0,0,.45));
-      animation: pulse 2.2s infinite ease-in-out;
-    }
+      .art {
+        width: min(260px, 80vw);
+        margin: 0 auto 14px;
+        display: block;
+        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.45));
+        animation: pulse 2.2s infinite ease-in-out;
+      }
 
-    @keyframes pulse {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
 
-    h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 22px;
-      letter-spacing: .4px;
-    }
+      h1 {
+        font-size: clamp(26px, 4vw, 44px);
+        margin: 12px 0 22px;
+        letter-spacing: 0.4px;
+      }
 
-    .button-zone {
-      position: relative;
-      width: min(520px, 92%);
-      height: 150px;
-      margin: 0 auto;
-      touch-action: none;
-    }
+      .button-zone {
+        position: relative;
+        width: min(520px, 92%);
+        height: 150px;
+        margin: 0 auto;
+        touch-action: none;
+      }
 
-    button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 16px 28px;
-      font-size: 18px;
-      font-weight: 800;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-    }
+      button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px 28px;
+        font-size: 18px;
+        font-weight: 800;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.2s ease, background 0.2s ease,
+          box-shadow 0.2s ease;
+      }
 
-    #yesBtn {
-      left: 16%;
-      background: linear-gradient(135deg, #c77dff, #9d4edd);
-      color: #fff;
-      box-shadow: 0 12px 30px rgba(157,78,221,.45);
-    }
+      #yesBtn {
+        left: 16%;
+        background: linear-gradient(135deg, #c77dff, #9d4edd);
+        color: #fff;
+        box-shadow: 0 12px 30px rgba(157, 78, 221, 0.45);
+      }
 
-    #yesBtn:hover {
-      background: linear-gradient(135deg, #d18cff, #b66bff);
-      transform: translateY(-50%) scale(1.06);
-    }
+      #yesBtn:hover {
+        background: linear-gradient(135deg, #d18cff, #b66bff);
+        transform: translateY(-50%) scale(1.06);
+      }
 
-    #noBtn {
-      left: 62%;
-      background: rgba(255,255,255,.85);
-      color: #3a0b5e;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-    }
+      #noBtn {
+        left: 62%;
+        background: rgba(255, 255, 255, 0.85);
+        color: #3a0b5e;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+      }
 
-    .hint {
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--textSoft);
-    }
+      .hint {
+        margin-top: 12px;
+        font-size: 14px;
+        color: var(--textSoft);
+      }
 
-    .result {
-      display: none;
-      margin-top: 20px;
-      animation: pop .4s ease;
-    }
+      .result {
+        display: none;
+        margin-top: 20px;
+        animation: pop 0.4s ease;
+      }
 
-    .result h2 {
-      font-size: clamp(30px, 4.5vw, 46px);
-      margin: 10px 0;
-    }
+      .result h2 {
+        font-size: clamp(30px, 4.5vw, 46px);
+        margin: 10px 0;
+      }
 
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
-      display: block;
-      border-radius: 16px;
-      box-shadow: 0 16px 40px rgba(0,0,0,.35);
-    }
+      .fireworks {
+        width: 100%;
+        max-width: 380px;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        border-radius: 16px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      }
 
-    @keyframes pop {
-      from { transform: scale(.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
-</head>
+      @keyframes pop {
+        from {
+          transform: scale(0.92);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
 
-<body>
-  <canvas id="confettiCanvas"></canvas>
+  <body>
+    <canvas id="confettiCanvas"></canvas>
 
-  <main class="card">
+    <main class="card">
+      <!-- CUTE ANIMAL -->
+      <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fur" x1="0" x2="1">
+            <stop offset="0" stop-color="#c77dff" />
+            <stop offset="1" stop-color="#9d4edd" />
+          </linearGradient>
+          <linearGradient id="heart" x1="0" x2="1">
+            <stop offset="0" stop-color="#ff8fab" />
+            <stop offset="1" stop-color="#ff4d6d" />
+          </linearGradient>
+        </defs>
 
-    <!-- CUTE ANIMAL -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#c77dff"/>
-          <stop offset="1" stop-color="#9d4edd"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff8fab"/>
-          <stop offset="1" stop-color="#ff4d6d"/>
-        </linearGradient>
-      </defs>
-
-      <path d="M250 50 C250 33 270 25 282 38
+        <path
+          d="M250 50 C250 33 270 25 282 38
                C294 25 314 33 314 50
                C314 78 282 92 282 106
                C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
+          fill="url(#heart)"
+        />
 
-      <path d="M90 120 C90 70 140 40 190 60
+        <path
+          d="M90 120 C90 70 140 40 190 60
                C240 40 290 70 290 120
                C290 180 240 210 190 210
                C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
+          fill="url(#fur)"
+        />
 
-      <circle cx="160" cy="130" r="8" fill="#2b0a3d"/>
-      <circle cx="220" cy="130" r="8" fill="#2b0a3d"/>
-    </svg>
+        <circle cx="160" cy="130" r="8" fill="#2b0a3d" />
+        <circle cx="220" cy="130" r="8" fill="#2b0a3d" />
+      </svg>
 
-    <h1>Shruti, will you be my Valentine? 💜</h1>
+      <h1>Shruti, will you be my Valentine? 💜</h1>
 
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes 💜</button>
-      <button id="noBtn">No 🙈</button>
-    </section>
+      <section class="button-zone" id="zone">
+        <button id="yesBtn">Yes 💜</button>
+        <button id="noBtn">No 🙈</button>
+      </section>
 
-    <div class="hint" id="hint">The “No” button is feeling shy 😈</div>
+      <div class="hint" id="hint">The “No” button is feeling shy 😈</div>
 
-    <section class="result" id="result">
-      <h2>YAYYY! 🎉💜</h2>
-      <img class="fireworks"
-        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NtaTlib3FsYjBpenY0dHBjNjh6bTdseTFjc2Z2c2o4OGtraHJ3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JsKdu4ikYSoxaAhJOB/giphy.gif"
-        alt="Fireworks">
-    </section>
+      <section class="result" id="result">
+        <h2>YAYYY! 🎉💜</h2>
+        <img
+          class="fireworks"
+          src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NtaTlib3FsYjBpenY0dHBjNjh6bTdseTFjc2Z2c2o4OGtraHJ3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JsKdu4ikYSoxaAhJOB/giphy.gif"
+          alt="Fireworks"
+        />
+      </section>
+    </main>
 
-  </main>
+    <script>
+      const zone = document.getElementById("zone");
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+      const result = document.getElementById("result");
+      const hint = document.getElementById("hint");
+      const confettiCanvas = document.getElementById("confettiCanvas");
 
-  <script>
-    const zone = document.getElementById("zone");
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const result = document.getElementById("result");
-    const hint = document.getElementById("hint");
-    const confettiCanvas = document.getElementById("confettiCanvas");
+      function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        confettiCanvas.width = innerWidth * dpr;
+        confettiCanvas.height = innerHeight * dpr;
+      }
+      resizeCanvas();
+      addEventListener("resize", resizeCanvas);
 
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      confettiCanvas.width = innerWidth * dpr;
-      confettiCanvas.height = innerHeight * dpr;
-    }
-    resizeCanvas();
-    addEventListener("resize", resizeCanvas);
+      const confettiFx = confetti.create(confettiCanvas, { resize: false });
 
-    const confettiFx = confetti.create(confettiCanvas, { resize: false });
+      function celebrate() {
+        confettiFx({
+          particleCount: 220,
+          spread: 160,
+          startVelocity: 55,
+          colors: ["#c77dff", "#9d4edd", "#ff8fab", "#ffffff"],
+          origin: { x: 0.5, y: 0.6 },
+        });
+      }
 
-    function celebrate() {
-      confettiFx({
-        particleCount: 220,
-        spread: 160,
-        startVelocity: 55,
-        colors: ["#c77dff","#9d4edd","#ff8fab","#ffffff"],
-        origin: { x: 0.5, y: 0.6 }
+      let yesScale = 1;
+
+      function growYes() {
+        yesScale = Math.min(2.3, yesScale + 0.12);
+        yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
+      }
+
+      function moveNo(x, y) {
+        const z = zone.getBoundingClientRect();
+        const b = noBtn.getBoundingClientRect();
+
+        let nx = Math.random() * (z.width - b.width);
+        let ny = Math.random() * (z.height - b.height);
+
+        noBtn.style.left = nx + "px";
+        noBtn.style.top = ny + "px";
+        growYes();
+      }
+
+      zone.addEventListener("pointermove", (e) => {
+        const b = noBtn.getBoundingClientRect();
+        const d = Math.hypot(
+          b.left + b.width / 2 - e.clientX,
+          b.top + b.height / 2 - e.clientY
+        );
+        if (d < 130) moveNo(e.clientX, e.clientY);
       });
-    }
 
-    let yesScale = 1;
+      noBtn.addEventListener("click", (e) => e.preventDefault());
 
-    function growYes() {
-      yesScale = Math.min(2.3, yesScale + 0.12);
-      yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
-    }
-
-    function moveNo(x, y) {
-      const z = zone.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
-
-      let nx = Math.random() * (z.width - b.width);
-      let ny = Math.random() * (z.height - b.height);
-
-      noBtn.style.left = nx + "px";
-      noBtn.style.top = ny + "px";
-      growYes();
-    }
-
-    zone.addEventListener("pointermove", e => {
-      const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot(
-        (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
-      );
-      if (d < 130) moveNo(e.clientX, e.clientY);
-    });
-
-    noBtn.addEventListener("click", e => e.preventDefault());
-
-    yesBtn.addEventListener("click", () => {
-      zone.style.display = "none";
-      hint.style.display = "none";
-      result.style.display = "block";
-      celebrate();
-    });
-  </script>
-</body>
+      yesBtn.addEventListener("click", () => {
+        zone.style.display = "none";
+        hint.style.display = "none";
+        result.style.display = "block";
+        celebrate();
+      });
+    </script>
+  </body>
 </html>
