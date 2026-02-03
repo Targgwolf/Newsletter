@@ -2,11 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>Suprise!!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Will you be my Valentine?</title>
 
     <!-- Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -16,15 +13,12 @@
         --bg1: #2b0a3d;
         --bg2: #5b1fa6;
         --card: rgba(255, 255, 255, 0.18);
-        --accent: #b56cff;
-        --accentHover: #9f4bff;
+        --accent: #c77dff;
         --textMain: #ffffff;
         --textSoft: rgba(255, 255, 255, 0.75);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -38,7 +32,6 @@
         color: var(--textMain);
       }
 
-      /* CONFETTI CANVAS */
       #confettiCanvas {
         position: fixed;
         inset: 0;
@@ -53,43 +46,46 @@
         backdrop-filter: blur(16px);
         border-radius: 26px;
         text-align: center;
-        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 25px 80px rgba(0,0,0,0.35);
         animation: float 6s ease-in-out infinite;
-        overflow: hidden;
       }
 
       @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
+        0%,100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
       }
 
-      .art {
-        width: min(260px, 80vw);
-        margin: 0 auto 14px;
-        display: block;
-        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.45));
-        animation: pulse 2.2s infinite ease-in-out;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
+      /* NAME ANIMATION */
       h1 {
         font-size: clamp(26px, 4vw, 44px);
         margin: 12px 0 22px;
-        letter-spacing: 0.4px;
+        font-weight: 800;
+      }
+
+      .name span {
+        opacity: 0;
+        display: inline-block;
+        transform: translateY(8px);
+        animation: letterIn 0.5s ease forwards;
+      }
+
+      @keyframes letterIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .name.glow {
+        text-shadow:
+          0 0 8px rgba(199,125,255,0.8),
+          0 0 16px rgba(199,125,255,0.6);
+        animation: glowPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes glowPulse {
+        0%,100% { text-shadow: 0 0 8px rgba(199,125,255,0.6); }
+        50% { text-shadow: 0 0 18px rgba(199,125,255,1); }
       }
 
       .button-zone {
@@ -110,29 +106,20 @@
         border-radius: 999px;
         border: none;
         cursor: pointer;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-        transition: transform 0.2s ease, background 0.2s ease,
-          box-shadow 0.2s ease;
       }
 
       #yesBtn {
         left: 16%;
         background: linear-gradient(135deg, #c77dff, #9d4edd);
         color: #fff;
-        box-shadow: 0 12px 30px rgba(157, 78, 221, 0.45);
-      }
-
-      #yesBtn:hover {
-        background: linear-gradient(135deg, #d18cff, #b66bff);
-        transform: translateY(-50%) scale(1.06);
+        box-shadow: 0 12px 30px rgba(157,78,221,0.45);
       }
 
       #noBtn {
         left: 62%;
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255,255,255,0.85);
         color: #3a0b5e;
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.25);
       }
 
       .hint {
@@ -147,30 +134,28 @@
         animation: pop 0.4s ease;
       }
 
-      .result h2 {
-        font-size: clamp(30px, 4.5vw, 46px);
-        margin: 10px 0;
+      .result p {
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 1.2s;
       }
 
       .fireworks {
         width: 100%;
         max-width: 380px;
-        height: auto;
-        margin: 0 auto;
-        display: block;
+        margin: 14px auto 0;
         border-radius: 16px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+        display: block;
       }
 
       @keyframes pop {
-        from {
-          transform: scale(0.92);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
+        from { transform: scale(0.92); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      @keyframes fadeIn {
+        to { opacity: 1; }
       }
     </style>
   </head>
@@ -178,41 +163,14 @@
   <body>
     <canvas id="confettiCanvas"></canvas>
 
+    <!-- Sounds -->
+    <audio id="popSound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" preload="auto"></audio>
+    <audio id="yaySound" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" preload="auto"></audio>
+
     <main class="card">
-      <!-- CUTE ANIMAL -->
-      <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="fur" x1="0" x2="1">
-            <stop offset="0" stop-color="#c77dff" />
-            <stop offset="1" stop-color="#9d4edd" />
-          </linearGradient>
-          <linearGradient id="heart" x1="0" x2="1">
-            <stop offset="0" stop-color="#ff8fab" />
-            <stop offset="1" stop-color="#ff4d6d" />
-          </linearGradient>
-        </defs>
-
-        <path
-          d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-          fill="url(#heart)"
-        />
-
-        <path
-          d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-          fill="url(#fur)"
-        />
-
-        <circle cx="160" cy="130" r="8" fill="#2b0a3d" />
-        <circle cx="220" cy="130" r="8" fill="#2b0a3d" />
-      </svg>
-
-      <h1>Shruti, will you be my Valentine? 💜</h1>
+      <h1>
+        <span class="name" id="name"></span>, will you be my Valentine? 💜
+      </h1>
 
       <section class="button-zone" id="zone">
         <button id="yesBtn">Yes 💜</button>
@@ -223,7 +181,7 @@
 
       <section class="result" id="result">
         <h2>YAYYY! 🎉💜</h2>
-        <p>BTW where is my PS5????</p>
+        <p>BTW where is my PS5???? 😎</p>
         <img
           class="fireworks"
           src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NtaTlib3FsYjBpenY0dHBjNjh6bTdseTFjc2Z2c2o4OGtraHJ3ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JsKdu4ikYSoxaAhJOB/giphy.gif"
@@ -233,12 +191,51 @@
     </main>
 
     <script>
+      /* NAME TYPE ANIMATION */
+      const nameText = "Shruti";
+      const nameEl = document.getElementById("name");
+
+      nameText.split("").forEach((char, i) => {
+        const span = document.createElement("span");
+        span.textContent = char;
+        span.style.animationDelay = `${i * 0.15}s`;
+        nameEl.appendChild(span);
+      });
+
+      setTimeout(() => {
+        nameEl.classList.add("glow");
+      }, nameText.length * 150 + 400);
+
+      /* EXISTING LOGIC (unchanged) */
       const zone = document.getElementById("zone");
       const yesBtn = document.getElementById("yesBtn");
       const noBtn = document.getElementById("noBtn");
       const result = document.getElementById("result");
       const hint = document.getElementById("hint");
+      const popSound = document.getElementById("popSound");
+      const yaySound = document.getElementById("yaySound");
       const confettiCanvas = document.getElementById("confettiCanvas");
+
+      let audioUnlocked = false;
+      let yesScale = 1;
+
+      const hints = [
+        "Hey 😤 that was close!",
+        "Nope. Try again 😈",
+        "Just say yes already 💜",
+        "Why are you running? 🏃‍♀️",
+        "The No button panicked 😂"
+      ];
+
+      function unlockAudio() {
+        if (audioUnlocked) return;
+        audioUnlocked = true;
+        popSound.play().then(() => popSound.pause()).catch(()=>{});
+        yaySound.play().then(() => yaySound.pause()).catch(()=>{});
+      }
+
+      document.addEventListener("click", unlockAudio, { once: true });
+      document.addEventListener("touchstart", unlockAudio, { once: true });
 
       function resizeCanvas() {
         const dpr = window.devicePixelRatio || 1;
@@ -256,26 +253,27 @@
           spread: 160,
           startVelocity: 55,
           colors: ["#c77dff", "#9d4edd", "#ff8fab", "#ffffff"],
-          origin: { x: 0.5, y: 0.6 },
+          origin: { x: 0.5, y: 0.6 }
         });
       }
-
-      let yesScale = 1;
 
       function growYes() {
         yesScale = Math.min(2.3, yesScale + 0.12);
         yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
       }
 
-      function moveNo(x, y) {
+      function moveNo() {
+        if (audioUnlocked) {
+          popSound.currentTime = 0;
+          popSound.play();
+        }
+
         const z = zone.getBoundingClientRect();
         const b = noBtn.getBoundingClientRect();
+        noBtn.style.left = Math.random() * (z.width - b.width) + "px";
+        noBtn.style.top = Math.random() * (z.height - b.height) + "px";
 
-        let nx = Math.random() * (z.width - b.width);
-        let ny = Math.random() * (z.height - b.height);
-
-        noBtn.style.left = nx + "px";
-        noBtn.style.top = ny + "px";
+        hint.textContent = hints[Math.floor(Math.random() * hints.length)];
         growYes();
       }
 
@@ -285,12 +283,11 @@
           b.left + b.width / 2 - e.clientX,
           b.top + b.height / 2 - e.clientY
         );
-        if (d < 130) moveNo(e.clientX, e.clientY);
+        if (d < 130) moveNo();
       });
 
-      noBtn.addEventListener("click", (e) => e.preventDefault());
-
       yesBtn.addEventListener("click", () => {
+        if (audioUnlocked) yaySound.play();
         zone.style.display = "none";
         hint.style.display = "none";
         result.style.display = "block";
